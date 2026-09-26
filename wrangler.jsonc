@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "marciusz-hu",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-03",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    // Nem létező oldalnál a public/404.html jelenik meg, 404-es státusszal
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    // Minden kérés előbb a Workeren megy át (karbantartó mód + űrlap)
+    "run_worker_first": true
+  },
+  // Kapcsolati űrlap: Cloudflare Email Routing. A címzett a CONTACT_TO secretben van.
+  "send_email": [{ "name": "CONTACT_EMAIL" }],
+  "vars": {
+    // Karbantartó mód: állítsd "true"-ra, pushold, és minden oldal a karbantartas.html-t mutatja
+    "MAINTENANCE": "false"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
