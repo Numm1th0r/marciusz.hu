@@ -373,7 +373,7 @@ ${slides}
 
 function renderPrivacy() {
   const main = `
-  <section class="page-top section--light">
+  <section class="page-top page-top--doc section--light">
     <div class="container" style="max-width:860px">
       <a class="back" href="/">${BACK}Vissza</a>
       <div class="doc">

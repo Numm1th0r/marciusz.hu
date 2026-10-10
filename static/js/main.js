@@ -58,8 +58,8 @@
     }, { passive: true });
   });
 
-  // ---- Mobilon swipe-olható kártyasorok: pöttyök az aktuális kártyához ----
-  document.querySelectorAll('.swipe').forEach(function (row) {
+  // ---- Mobilon lapozható sorok (kártyasorok, galéria): pöttyök az aktuális elemhez ----
+  document.querySelectorAll('.swipe, [data-carousel] .carousel__track').forEach(function (row) {
     var items = row.children;
     if (items.length < 2) return;
     var dots = document.createElement('div');
@@ -73,7 +73,8 @@
       });
       dots.appendChild(d);
     });
-    row.parentNode.insertBefore(dots, row.nextSibling);
+    var anchor = row.closest('[data-carousel]') || row;
+    anchor.parentNode.insertBefore(dots, anchor.nextSibling);
     function update() {
       var first = row.firstElementChild.offsetLeft;
       var i = 0, best = Infinity;
@@ -117,16 +118,19 @@
     var mq = window.matchMedia('(max-width: 759px)');
     var cards = Array.prototype.slice.call(deck.querySelectorAll(':scope > .project'));
     var order = cards.slice();
+    // ugyanaz a pötty-sor, mint a többi lapozható sor alatt
     var controls = document.createElement('div');
-    controls.className = 'deck-controls';
-    controls.innerHTML =
-      '<button type="button" class="deck-btn" data-dir="prev" aria-label="Előző referencia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
-      '<div class="deck-dots"></div>' +
-      '<button type="button" class="deck-btn" data-dir="next" aria-label="Következő referencia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>';
-    var dotsWrap = controls.querySelector('.deck-dots');
-    cards.forEach(function () { dotsWrap.appendChild(document.createElement('span')); });
+    controls.className = 'swipe-dots';
+    cards.forEach(function (c, j) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('aria-label', (j + 1) + '. referencia: ' + (c.querySelector('h2') || c).textContent.trim());
+      d.addEventListener('click', function () { next(-1, c); });
+      controls.appendChild(d);
+    });
+    var dotsWrap = controls;
     var hint = document.createElement('p');
-    hint.className = 'deck-hint';
+    hint.className = 'swipe-hint';
     hint.textContent = 'Húzd oldalra a következő referenciához';
     var busy = false, dragged = false, ro = null;
 
@@ -141,13 +145,14 @@
         else if (i === 1) { c.style.transform = 'translateY(14px) scale(0.95)'; c.style.opacity = '1'; c.style.visibility = 'visible'; }
         else { c.style.transform = 'translateY(14px) scale(0.95)'; c.style.opacity = '0'; c.style.visibility = 'hidden'; }
       });
-      Array.prototype.forEach.call(dotsWrap.children, function (d, j) { d.className = cards[j] === top() ? 'is-active' : ''; });
+      Array.prototype.forEach.call(dotsWrap.children, function (d, j) { d.setAttribute('aria-current', String(cards[j] === top())); });
       if (ro) { ro.disconnect(); ro.observe(top()); }
       fitHeight();
       videos.forEach(syncVideo);
     }
-    function next(dir) {
-      if (busy) return;
+    // a legfelső kártyát kidobja; ha van cél, addig forgat, amíg az kerül felülre
+    function next(dir, target) {
+      if (busy || target === top()) return;
       busy = true;
       var c = top();
       c.classList.add('is-dragging');
@@ -156,6 +161,7 @@
       c.style.opacity = '0';
       setTimeout(function () {
         order.push(order.shift());
+        if (target) while (order[0] !== target) order.push(order.shift());
         c.classList.remove('is-dragging');
         c.style.transition = 'none';
         layout();
@@ -164,27 +170,6 @@
         busy = false;
       }, 340);
     }
-    function prev() {
-      if (busy) return;
-      busy = true;
-      var c = order.pop();
-      order.unshift(c);
-      c.style.transition = 'none';
-      c.style.visibility = 'visible';
-      c.style.zIndex = String(order.length + 1);
-      c.style.transform = 'translateX(-130%) rotate(-18deg)';
-      c.style.opacity = '0';
-      void c.offsetWidth;
-      c.style.transition = '';
-      layout();
-      setTimeout(function () { busy = false; }, 360);
-    }
-    controls.addEventListener('click', function (e) {
-      var b = e.target.closest('.deck-btn');
-      if (!b) return;
-      if (b.getAttribute('data-dir') === 'next') next(-1); else prev();
-    });
-
     // húzás
     var sx = 0, sy = 0, dx = 0, mode = null, pid = null;
     function onDown(e) {

@@ -169,7 +169,7 @@ a { color: var(--blue); text-decoration: none; }
   .hero-art { order: -1; max-width: 230px; }
   .hero .h1 { font-size: 64px; }
   .hero .lead { margin: 16px auto 0; font-size: 16px; max-width: 34ch; }
-  .hero .btn-row { margin: 28px auto 0; max-width: 320px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .hero .btn-row { margin-top: 28px; }
   .hero .btn { width: 100%; padding: 16px 20px; font-size: 16px; }
 }
 
@@ -399,9 +399,54 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .maintenance__card .lead + .lead { margin-top: 12px; }
 .maintenance__icon { width: 76px; height: 76px; border-radius: 22px; background: var(--yellow); display: flex; align-items: center; justify-content: center; margin: 0 auto 26px; }
 
-@media (max-width: 699px) {
-  .packages { gap: 16px; }
-  .package { padding: 26px 22px; border-radius: 26px; }
+/* ==========================================================================
+   Mobil (≤ 759px)
+   Egy szabály: nincsenek lebegő kártyák. A tartalom közvetlenül a szekció
+   hátterén ül, a szekciókat mindenhol ugyanaz a hullám választja el, és minden
+   lapozható sor teljes szélességű diákból áll, alattuk ugyanazokkal a pöttyökkel.
+   ========================================================================== */
+.swipe-dots { display: none; }
+@media (max-width: 759px) {
+  /* Elválasztások: a hullámot nem nyomjuk össze, hanem a középső szeletét mutatjuk */
+  .wave { width: 180%; max-width: none; margin-left: -40%; margin-top: 40px; }
+  main > section, .contact { overflow-x: clip; }
+  .contact, #csomagok, .page-top--refs, .page-top--doc { background: var(--white); }
+  .wave--to-contact path, .wave--to-packages path { fill: var(--white); }
+  .page-top--refs > .wave--to-contact, .page-top--doc > .wave--to-contact { display: none; }
+  .page-top--refs, .page-top--doc { padding-bottom: 32px; }
+
+  /* Gombok: egymás alatt, teljes szélességben */
+  .btn-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .btn-row .btn, .project .btn, .gallery .btn, .package__foot .btn, .postcard__actions .btn { width: 100%; }
+
+  /* Lapozható sorok: teljes szélességű diák + pöttyök */
+  .swipe {
+    display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); padding: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .swipe::-webkit-scrollbar { display: none; }
+  .swipe > * { flex: 0 0 100%; max-width: none; scroll-snap-align: start; border-radius: 0; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .swipe-dots { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .swipe-dots button { width: 9px; height: 9px; border-radius: 999px; background: rgba(50, 41, 47, 0.25); transition: width .25s, background .25s; }
+  .swipe-dots button[aria-current="true"] { width: 26px; background: var(--dark); }
+  .on-blue .swipe-dots button { background: rgba(255, 255, 255, 0.35); }
+  .on-blue .swipe-dots button[aria-current="true"] { background: var(--yellow); }
+  .swipe-hint { margin-top: 10px; text-align: center; font-weight: 700; font-size: 13px; color: rgba(50, 41, 47, 0.55); }
+
+  /* Szolgáltatások: közvetlenül a kék háttéren */
+  .cards.swipe { margin-top: 28px; }
+  .cards.swipe > .glass-card { background: transparent; border: 0; padding-top: 0; padding-bottom: 0; }
+  .cards.swipe > .glass-card:hover { transform: none; background: transparent; }
+
+  /* Csomagok: mindkettő fehér, a kiemeltet a sárga címke és gomb jelzi */
+  .packages.swipe { margin-top: 28px; }
+  .package { padding-top: 0; padding-bottom: 0; }
+  .package--featured { background: var(--white); color: var(--dark); }
+  .package--featured .package__desc { color: var(--text); }
+  .package--featured .package__list svg { color: var(--blue); }
+  .package--featured .package__meta { border-top-color: rgba(50, 41, 47, 0.14); color: var(--text); }
+  .package--featured .package__meta strong { color: var(--dark); }
   .package h3 { font-size: 28px; margin-top: 16px; }
   .package__desc { margin-top: 10px; font-size: 15px; }
   .package__list { gap: 10px; margin-top: 20px; margin-bottom: 22px; }
@@ -409,80 +454,35 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
   .package__list svg { width: 18px; height: 18px; }
   .package__meta { padding-top: 16px; font-size: 14px; }
   .package__foot { margin-top: 18px; }
-  .package__foot .btn { width: 100%; }
-  }
 
-/* ---------- Mobil: egységes gombok, teljes szélességű blokkok ---------- */
-@media (max-width: 759px) {
-  .btn-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  .btn-row .btn, .project .btn, .gallery .btn { width: 100%; }
+  /* Vélemények: közvetlenül a szürke háttéren */
+  .quotes.swipe { margin-top: 24px; }
+  .quotes.swipe > .quote { background: transparent; padding-top: 0; padding-bottom: 0; }
 
-  /* Referenciák, galéria, kapcsolat: kártyakeret helyett a teljes szélességet kitöltik */
-  .project, .gallery, .postcard {
+  /* Referenciák, galéria, adatkezelés, kapcsolat: kártyakeret nélkül, teljes szélességben */
+  .project, .gallery, .postcard, .doc {
     margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter));
-    border-radius: 0; padding-left: var(--gutter); padding-right: var(--gutter);
+    border-radius: 0; padding-left: var(--gutter); padding-right: var(--gutter); box-shadow: none;
   }
-  .project { padding-top: 28px; padding-bottom: 32px; }
-  .gallery { padding-top: 32px; padding-bottom: 36px; }
-  .postcard { box-shadow: none; padding-top: 28px; padding-bottom: 32px; }
-  .contact { padding: 28px 0 0; }
-  .contact .container { padding: 0 var(--gutter); }
-
-  /* Csomagok: teljes szélességű, oldalra húzható panelek */
-  .packages.swipe { gap: 0; padding: 0; scroll-padding-inline: 0; }
-  .packages.swipe > * { flex-basis: 100%; border-radius: 0; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .project { padding-top: 8px; padding-bottom: 8px; }
+  .gallery { margin-top: 48px; padding-top: 0; padding-bottom: 0; background: transparent; }
+  .carousel__btn, .carousel__count { display: none; }
+  .doc { margin-top: 28px; padding-top: 0; padding-bottom: 0; background: transparent; }
+  .doc h1 { line-height: 1.2; }
+  .contact { padding: 8px 0 0; }
+  .postcard { padding-top: 24px; padding-bottom: 0; }
+  .postcard__title { font-size: min(34px, 8.6vw); }
 
   /* Referencia-pakli (Tinder-szerű) */
   .projects.is-deck { position: relative; display: block; overflow-x: visible; overflow-y: clip; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); transition: height .3s; }
   .projects.is-deck > .project {
-    position: absolute; top: 0; left: 0; right: 0; margin: 0;
+    position: absolute; top: 0; left: 0; right: 0; margin: 0; background: var(--white);
     transform-origin: 50% 90%; transition: transform .35s ease, opacity .35s ease;
     touch-action: pan-y; user-select: none; -webkit-user-select: none;
   }
+  .projects.is-deck > .project.is-dragging { box-shadow: 0 24px 50px -24px rgba(50, 41, 47, 0.5); }
   .projects.is-deck > .project img, .projects.is-deck > .project video { pointer-events: none; }
   .laptop__base { width: 104%; margin-left: -2%; }
-  .deck-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 30px; }
-  .deck-btn { width: 46px; height: 46px; border-radius: 999px; background: var(--dark); color: var(--white); display: flex; align-items: center; justify-content: center; }
-  .deck-btn:active { background: var(--blue); }
-  .deck-dots { display: flex; gap: 8px; }
-  .deck-dots span { width: 9px; height: 9px; border-radius: 999px; background: rgba(50, 41, 47, 0.25); transition: width .25s, background .25s; }
-  .deck-dots span.is-active { width: 26px; background: var(--dark); }
-  .deck-hint { margin-top: 12px; text-align: center; font-weight: 700; font-size: 13px; color: rgba(50, 41, 47, 0.55); }
-}
-
-/* ---------- Mobil: egységes elválasztások ---------- */
-@media (max-width: 759px) {
-  /* A hullámot nem nyomjuk össze (különben elliptikus ív lesz belőle), hanem a középső szeletét mutatjuk */
-  .wave { width: 180%; max-width: none; margin-left: -40%; }
-  main > section, .contact { overflow-x: clip; }
-
-  /* A kártyák háttere = a szekció háttere, így nincs egyenes vágás és kék keret */
-  .contact, #csomagok, .page-top--refs { background: var(--white); }
-  .wave--to-contact path, .wave--to-packages path { fill: var(--white); }
-  .packages.swipe + .swipe-dots { margin-top: 18px; }
-  .projects.is-deck > .project { box-shadow: none; }
-  .projects.is-deck > .project.is-dragging { box-shadow: 0 24px 50px -24px rgba(50, 41, 47, 0.5); }
-  .page-top--refs > .wave--to-contact { display: none; }
-  .page-top--refs { padding-bottom: 8px; }
-}
-
-/* ---------- Mobilon swipe-olható kártyasorok ---------- */
-.swipe-dots { display: none; }
-@media (max-width: 699px) {
-  .swipe {
-    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-    margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter));
-    padding: 4px var(--gutter) 12px; scroll-padding-inline: var(--gutter);
-    -webkit-overflow-scrolling: touch;
-  }
-  .swipe::-webkit-scrollbar { display: none; }
-  .swipe > * { flex: 0 0 86%; max-width: none; scroll-snap-align: start; }
-  .swipe > .glass-card:hover { transform: none; }
-  .swipe-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
-  .swipe-dots button { width: 9px; height: 9px; border-radius: 999px; background: rgba(50, 41, 47, 0.25); transition: width .25s, background .25s; }
-  .swipe-dots button[aria-current="true"] { width: 26px; background: var(--dark); }
-  .on-blue .swipe-dots button { background: rgba(255, 255, 255, 0.35); }
-  .on-blue .swipe-dots button[aria-current="true"] { background: var(--yellow); }
 }
 
 @media (prefers-reduced-motion: reduce) {
