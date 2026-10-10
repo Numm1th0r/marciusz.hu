@@ -3,19 +3,22 @@
   "name": "marciusz-hu",
   "main": "src/worker.js",
   "compatibility_date": "2026-09-03",
+  // A deploy előtt legenerálja az oldalakat a content/ mappából a dist/ mappába
+  "build": {
+    "command": "node build.mjs",
+    "watch_dir": ["content", "static", "build.mjs"]
+  },
   "assets": {
-    "directory": "./public",
+    "directory": "./dist",
     "binding": "ASSETS",
-    // Nem létező oldalnál a public/404.html jelenik meg, 404-es státusszal
+    // Nem létező oldalnál a 404.html jelenik meg, 404-es státusszal
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash",
-    // Minden kérés előbb a Workeren megy át (karbantartó mód + űrlap)
+    // Minden kérés előbb a Workeren megy át (karbantartó mód)
     "run_worker_first": true
   },
-  // Kapcsolati űrlap: Cloudflare Email Routing. A címzett a CONTACT_TO secretben van.
-  "send_email": [{ "name": "CONTACT_EMAIL" }],
   "vars": {
-    // Karbantartó mód: állítsd "true"-ra, pushold, és minden oldal a karbantartas.html-t mutatja
+    // Karbantartó mód: állítsd "true"-ra, pushold, és minden oldal a karbantartás oldalt mutatja
     "MAINTENANCE": "false"
   },
   "observability": {

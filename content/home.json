@@ -1,0 +1,119 @@
+{
+  "title": "István Marci – Weboldal-készítés",
+  "description": "Egyedi tervezésű, mobilbarát weboldalak kisvállalkozásoknak, a tervezéstől az élesítésig. Landoló oldal vagy komplex weboldal, személyre szabott ajánlattal.",
+  "hero": {
+    "eyebrow": "Weboldal-készítés",
+    "heading": "Szia!",
+    "lead": "István Marci vagyok, weboldalakat tervezek és fejlesztek. Olyan oldalt készítek neked, ami jól néz ki, mobilon is gyors, és első ránézésre elmondja, mivel foglalkozol. A tervtől az élesítésig mindent egy kézben tartok.",
+    "primaryLabel": "Ajánlatot kérek",
+    "secondaryLabel": "Munkáim",
+    "image": "/media/marci-karakter.webp",
+    "imageAlt": "István Marci rajzolt karaktere, keresztbe tett karral"
+  },
+  "services": {
+    "heading": "Miben segítek?",
+    "lead": "Akár most indulsz, akár a régi oldaladat szégyelled megmutatni: segítek, hogy a weboldalad ügyfeleket hozzon, ne csak létezzen.",
+    "items": [
+      {
+        "icon": "landing",
+        "title": "Landoló oldal",
+        "text": "Egyetlen, áttekinthető tájékoztató oldal a vállalkozásodról: mivel foglalkozol, mit kínálsz, és hogyan érnek el. Legfeljebb egy hét alatt elkészül.",
+        "link": "",
+        "linkLabel": ""
+      },
+      {
+        "icon": "pages",
+        "title": "Egyedi weboldal",
+        "text": "Többoldalas weboldal a te igényeidre szabva, szolgáltatásokkal, referenciákkal, bloggal. Utána te magad is könnyen frissítheted.",
+        "link": "",
+        "linkLabel": ""
+      },
+      {
+        "icon": "refresh",
+        "title": "Oldal-felújítás",
+        "text": "Elavult a dizájn, szétesik mobilon, lassan tölt be? Modern külsőt és átgondolt felépítést kap, a meglévő tartalmad megmarad.",
+        "link": "",
+        "linkLabel": ""
+      },
+      {
+        "icon": "pen",
+        "title": "Grafika",
+        "text": "A weboldalak mellett rajzolok is: pólómintát tervezek nyomdakész formában, és fotó alapján karikatúrát készítek.",
+        "link": "/referenciak#polok-karikaturak",
+        "linkLabel": "Grafikák megtekintése →"
+      }
+    ]
+  },
+  "packages": {
+    "heading": "Csomagok",
+    "lead": "Két kiindulópont, amit a te igényeidhez igazítok. Az ár a tartalom mennyiségétől és a funkcióktól függ, ezért minden ajánlat személyre szabott.",
+    "items": [
+      {
+        "featured": false,
+        "badge": "Gyors indulás",
+        "title": "Landoló oldal",
+        "description": "Ha minél hamarabb szeretnél egy igényes tájékoztató oldalt, ami egy helyen elmond mindent a vállalkozásodról.",
+        "features": [
+          "Egyoldalas, görgethető tájékoztató oldal",
+          "Egyedi dizájn a te színeiddel és hangulatoddal",
+          "Mobilon, tableten és gépen is jól mutat",
+          "Szolgáltatások, árak, nyitvatartás és elérhetőségek egy helyen",
+          "Segítség a domain és a tárhely beállításában"
+        ],
+        "durationLabel": "Átfutás:",
+        "duration": "legfeljebb 1 hét",
+        "buttonLabel": "Ezt kérem"
+      },
+      {
+        "featured": true,
+        "badge": "Hosszú távra",
+        "title": "Komplex weboldal",
+        "description": "Ha a weboldalad a vállalkozásod központja lesz: több aloldal, referenciák, blog, és te magad is szerkesztheted.",
+        "features": [
+          "Több aloldal: rólam, szolgáltatások, referenciák, blog…",
+          "Tartalomkezelő, amivel te is könnyen frissítheted",
+          "Kapcsolati űrlap",
+          "Gyors betöltés, mobilra optimalizálva",
+          "Betanítás, hogy magabiztosan kezeld az oldalt",
+          "Támogatás az indulás után is"
+        ],
+        "durationLabel": "Átfutás:",
+        "duration": "a projekt méretétől függően 3–6 hét",
+        "buttonLabel": "Ezt kérem"
+      }
+    ],
+    "note": "Nem tudod eldönteni, melyik kell? Írd le, mit szeretnél elérni, és javaslok egy megoldást.",
+    "noteLink": "Segíts választani →"
+  },
+  "reference": {
+    "heading": "Referencia",
+    "text": "Nézd meg, milyen oldalakat készítettem egy játékwebshopnak, egy herbalistának, egy marketing asszisztensnek és egy asztalosnak. Mellettük pedig pár pólóterv és karikatúra, mert a rajzolásról sem mondtam le.",
+    "primaryLabel": "Megnézem a munkáidat",
+    "secondaryLabel": "Ajánlatot kérek",
+    "tiles": [
+      {
+        "shape": "tall",
+        "image1": "/media/csempek/polo-kucsera.webp",
+        "image2": "/media/csempek/polo-vonalrajz-farmer.webp"
+      },
+      {
+        "shape": "tall",
+        "image1": "/media/csempek/polo-vonalrajz-fekete.webp",
+        "image2": "/media/csempek/pulcsi-zseb-roka.webp"
+      },
+      {
+        "shape": "square",
+        "image1": "/media/csempek/karikatura-par.webp",
+        "image2": "/media/csempek/pulcsi-roka-hat.webp"
+      },
+      {
+        "shape": "square",
+        "image1": "/media/csempek/karikatura-busz.webp",
+        "image2": "/media/csempek/pulcsi-vemend.webp"
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "Visszajelzések"
+  }
+}

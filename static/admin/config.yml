@@ -1,0 +1,233 @@
+# Sveltia CMS – marciusz.work
+#
+# Minden mező itt a content/ mappa egy JSON-mezőjének felel meg, a build.mjs
+# ezekből generálja az oldalakat. Ha itt új mezőt veszel fel, a build.mjs-ben
+# is használd, különben nem jelenik meg az oldalon.
+
+backend:
+  name: github
+  repo: Numm1th0r/marciusz.hu
+  branch: main
+
+media_folder: static/media
+public_folder: /media
+
+# A feltöltött képeket a CMS webp-re alakítja és legfeljebb 2000 px-re kicsinyíti
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2000
+          height: 2000
+
+site_url: https://marciusz.work
+display_url: https://marciusz.work
+logo_url: /icon-192.png
+
+collections:
+  # ── Oldalak ─────────────────────────────────────────────────
+  - name: pages
+    label: Oldalak
+    files:
+      - name: home
+        label: Kezdőoldal
+        file: content/home.json
+        format: json
+        fields:
+          - { name: title, label: Böngészőfül címe, widget: string }
+          - { name: description, label: Leírás (keresőknek, megosztáshoz), widget: text }
+          - name: hero
+            label: Nyitó blokk
+            widget: object
+            fields:
+              - { name: eyebrow, label: Kis felirat a cím fölött, widget: string, required: false }
+              - { name: heading, label: Főcím, widget: string }
+              - { name: lead, label: Bemutatkozó szöveg, widget: text }
+              - { name: primaryLabel, label: Kék gomb felirata, widget: string }
+              - { name: secondaryLabel, label: Második gomb felirata, widget: string }
+              - { name: image, label: Kép, widget: image }
+              - { name: imageAlt, label: Kép leírása, widget: string }
+          - name: services
+            label: Szolgáltatások
+            widget: object
+            fields:
+              - { name: heading, label: Cím, widget: string }
+              - { name: lead, label: Bevezető, widget: text }
+              - name: items
+                label: Kártyák
+                label_singular: Kártya
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - name: icon
+                    label: Ikon
+                    widget: select
+                    options:
+                      - { label: Egy oldal, value: landing }
+                      - { label: Több oldal, value: pages }
+                      - { label: Felújítás, value: refresh }
+                      - { label: Toll (grafika), value: pen }
+                      - { label: Bolt, value: shop }
+                      - { label: Buborék, value: chat }
+                  - { name: title, label: Cím, widget: string }
+                  - { name: text, label: Szöveg, widget: text }
+                  - { name: link, label: Link (nem kötelező), widget: string, required: false }
+                  - { name: linkLabel, label: Link felirata, widget: string, required: false }
+          - name: packages
+            label: Csomagok
+            widget: object
+            fields:
+              - { name: heading, label: Cím, widget: string }
+              - { name: lead, label: Bevezető, widget: text }
+              - name: items
+                label: Csomagok
+                label_singular: Csomag
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { name: featured, label: Kiemelt (sötét kártya), widget: boolean, default: false }
+                  - { name: badge, label: Címke, widget: string, required: false }
+                  - { name: title, label: Név, widget: string }
+                  - { name: description, label: Leírás, widget: text }
+                  - name: features
+                    label: Mit tartalmaz
+                    widget: list
+                    field: { name: feature, label: Tétel, widget: string }
+                  - { name: durationLabel, label: Átfutás felirat, widget: string, default: "Átfutás:" }
+                  - { name: duration, label: Átfutás, widget: string, required: false }
+                  - { name: buttonLabel, label: Gomb felirata, widget: string, default: Ezt kérem, hint: "A gomb e-mailt nyit a csomag nevével a tárgyban." }
+              - { name: note, label: Megjegyzés a csomagok alatt, widget: text, required: false }
+              - { name: noteLink, label: Megjegyzés link felirata, widget: string, required: false }
+          - name: reference
+            label: Referencia blokk
+            widget: object
+            fields:
+              - { name: heading, label: Cím, widget: string }
+              - { name: text, label: Szöveg, widget: text }
+              - { name: primaryLabel, label: Sárga gomb felirata, widget: string }
+              - { name: secondaryLabel, label: Második gomb felirata, widget: string }
+              - name: tiles
+                label: Képcsempék (mindegyikben két kép váltakozik)
+                label_singular: Csempe
+                widget: list
+                max: 4
+                fields:
+                  - name: shape
+                    label: Forma
+                    widget: select
+                    default: tall
+                    options:
+                      - { label: Álló (4:5), value: tall }
+                      - { label: Négyzet (1:1), value: square }
+                  - { name: image1, label: Első kép, widget: image, media_folder: /static/media/csempek, public_folder: /media/csempek }
+                  - { name: image2, label: Második kép, widget: image, media_folder: /static/media/csempek, public_folder: /media/csempek }
+          - name: testimonials
+            label: Visszajelzések blokk
+            widget: object
+            fields:
+              - { name: heading, label: Cím, widget: string, hint: "Maguk a vélemények a „Vélemények” menüben vannak." }
+
+      - name: references
+        label: Referenciák oldal
+        file: content/referencia-oldal.json
+        format: json
+        fields:
+          - { name: title, label: Böngészőfül címe, widget: string }
+          - { name: description, label: Leírás (keresőknek), widget: text }
+          - { name: heading, label: Cím, widget: string }
+          - { name: lead, label: Bevezető, widget: text }
+          - { name: projectButtonLabel, label: Projekt gomb felirata, widget: string }
+          - name: gallery
+            label: Pólók és karikatúrák
+            widget: object
+            fields:
+              - { name: heading, label: Cím, widget: string }
+              - { name: text, label: Szöveg, widget: text }
+              - { name: buttonLabel, label: Gomb felirata, widget: string }
+              - name: images
+                label: Képek (négyzetes képek mutatnak a legjobban)
+                label_singular: Kép
+                widget: list
+                summary: "{{fields.alt}}"
+                fields:
+                  - { name: image, label: Kép, widget: image, media_folder: /static/media/galeria, public_folder: /media/galeria }
+                  - { name: alt, label: Mi látható a képen?, widget: string }
+
+      - name: privacy
+        label: Adatkezelés
+        file: content/adatkezeles.json
+        format: json
+        fields:
+          - { name: title, label: Cím, widget: string }
+          - { name: updated, label: Utolsó frissítés, widget: string }
+          - name: body
+            label: Szöveg
+            widget: markdown
+            buttons: [bold, link, heading-two, bulleted-list]
+            editor_components: []
+            hint: "Használható: ## alcím, - felsorolás, **félkövér**, [link](cím)."
+
+      - name: site
+        label: Kapcsolat és lábléc
+        file: content/site.json
+        format: json
+        fields:
+          - { name: siteName, label: Az oldal neve, widget: string }
+          - { name: email, label: E-mail cím, widget: string }
+          - { name: contactHeading, label: Kapcsolat – cím, widget: string }
+          - { name: contactText, label: Kapcsolat – szöveg, widget: text }
+          - { name: contactTipsHeading, label: Tippek – cím, widget: string, required: false }
+          - name: contactTips
+            label: Tippek – mit írjon meg a látogató
+            widget: list
+            required: false
+            field: { name: tip, label: Tipp, widget: string }
+          - { name: contactNote, label: Kapcsolat – apró megjegyzés, widget: string, required: false }
+          - { name: contactImage, label: Kapcsolat – illusztráció, widget: image, required: false }
+          - { name: footerText, label: Lábléc szövege, widget: string }
+          - { name: credits, label: Képforrás megjelölése, widget: string, required: false, hint: "Ingyenes Freepik képnél kötelező feltüntetni a szerzőt." }
+
+  # ── Referenciák ─────────────────────────────────────────────
+  - name: referenciak
+    label: Referenciák
+    label_singular: Referencia
+    folder: content/referenciak
+    format: json
+    extension: json
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{order}}. {{title}}"
+    sortable_fields: [order, title]
+    fields:
+      - { name: title, label: Név, widget: string }
+      - { name: order, label: Sorrend, widget: number, value_type: int, default: 10, hint: "Kisebb szám = előrébb." }
+      - name: tags
+        label: Címkék
+        widget: list
+        field: { name: tag, label: Címke, widget: string }
+      - { name: description, label: Leírás, widget: text }
+      - { name: url, label: Élő oldal címe, widget: string, required: false, hint: "Pl. https://példa.hu/" }
+      - { name: video, label: Videó (mp4, 16:10), widget: file, required: false, media_folder: /static/media/referencia, public_folder: /media/referencia }
+      - { name: poster, label: Állókép (a videó első képkockája), widget: image, required: false, media_folder: /static/media/referencia, public_folder: /media/referencia }
+
+  # ── Vélemények ──────────────────────────────────────────────
+  - name: velemenyek
+    label: Vélemények
+    label_singular: Vélemény
+    folder: content/velemenyek
+    format: json
+    extension: json
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{name}} – {{role}}"
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Név, widget: string }
+      - { name: role, label: Mit készítettél neki?, widget: string, required: false, hint: "Pl. WordPress weboldal" }
+      - { name: quote, label: Vélemény, widget: text }
+      - { name: order, label: Sorrend, widget: number, value_type: int, default: 10 }

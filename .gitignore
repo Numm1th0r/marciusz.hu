@@ -3,3 +3,4 @@ reference/
 .wrangler/
 node_modules/
 .dev.vars
+dist/
