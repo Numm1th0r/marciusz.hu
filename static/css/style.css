@@ -162,9 +162,14 @@ a { color: var(--blue); text-decoration: none; }
 .hero-art__frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 999px 999px 32px 32px; background: var(--blue); }
 .hero-art__frame img { position: absolute; left: 50%; bottom: 0; height: 88%; width: auto; max-width: none; transform: translateX(-50%); }
 @media (max-width: 759px) {
-  .hero { padding-top: calc(var(--nav-h) + 24px); }
-  .hero__grid { gap: 28px; }
-  .hero-art { order: -1; max-width: 260px; }
+  .hero { padding-top: calc(var(--nav-h) + 20px); }
+  .hero__grid { gap: 26px; text-align: center; justify-items: center; }
+  .hero__grid > div:first-child { width: 100%; }
+  .hero-art { order: -1; max-width: 230px; }
+  .hero .h1 { font-size: 64px; }
+  .hero .lead { margin: 16px auto 0; font-size: 16px; max-width: 34ch; }
+  .hero .btn-row { margin: 28px auto 0; max-width: 320px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .hero .btn { width: 100%; padding: 16px 20px; font-size: 16px; }
 }
 
 /* ---------- Szolgáltatások ---------- */
@@ -199,10 +204,6 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .package__list { margin-bottom: 28px; }
 .package__foot { margin-top: 24px; }
 .package--featured .btn--yellow:hover { background: var(--white); }
-.packages-note { margin-top: clamp(24px, 3vw, 36px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; background: rgba(25, 100, 126, 0.08); border-radius: 24px; padding: 22px clamp(22px, 3vw, 32px); }
-.packages-note p { font-size: 16px; line-height: 1.6; font-weight: 600; color: var(--dark); max-width: 70ch; }
-.packages-note a { font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 14px; white-space: nowrap; }
-.packages-note a:hover { color: var(--red); }
 
 /* ---------- Referencia csempék (főoldal) ---------- */
 .ref__grid { display: grid; grid-template-columns: 1fr; gap: clamp(40px, 5vw, 72px); align-items: center; }
@@ -289,7 +290,14 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
   padding: clamp(26px, 4vw, 52px); display: grid; grid-template-columns: 1fr; gap: clamp(26px, 4vw, 48px);
   transform: rotate(-1.2deg); box-shadow: 0 40px 70px -36px rgba(0, 0, 0, 0.55);
 }
-@media (min-width: 900px) { .postcard { grid-template-columns: minmax(0, 1fr) 2px minmax(0, 1fr); } }
+.postcard { grid-template-areas: "stamps" "msg" "div" "addr"; }
+.postcard__stamps { grid-area: stamps; }
+.postcard__message { grid-area: msg; }
+.postcard__divider { grid-area: div; }
+.postcard__address { grid-area: addr; }
+@media (min-width: 900px) {
+  .postcard { grid-template-columns: minmax(0, 1fr) 2px minmax(0, 1fr); grid-template-rows: auto 1fr; row-gap: 0; grid-template-areas: "msg div stamps" "msg div addr"; }
+}
 .postcard__title { font-size: clamp(40px, 5vw, 62px); line-height: 1.12; }
 .postcard__text { margin-top: 18px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; font-weight: 500; color: var(--text); }
 .postcard__label { font-weight: 800; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin: 28px 0 12px; }
@@ -298,7 +306,7 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .postcard__tips svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--blue); }
 .postcard__divider { background-image: linear-gradient(rgba(50, 41, 47, 0.22) 55%, transparent 0); background-size: 2px 14px; background-repeat: repeat-y; }
 @media (max-width: 899px) {
-  .postcard { transform: rotate(-0.8deg); }
+  .postcard { transform: none; row-gap: 22px; }
   .postcard__divider { height: 2px; background-image: linear-gradient(90deg, rgba(50, 41, 47, 0.22) 55%, transparent 0); background-size: 14px 2px; background-repeat: repeat-x; }
 }
 .postcard__address { display: flex; flex-direction: column; }
@@ -316,8 +324,20 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 }
 .stamp__logo { width: 54px; height: 54px; border-radius: 15px; background: var(--dark); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 22px; }
 .stamp__text { font-weight: 900; font-size: 11px; letter-spacing: 0.14em; color: var(--dark); }
+@media (max-width: 899px) {
+  .postcard__stamps { min-height: 0; margin-bottom: -6px; }
+  .postcard__address .postcard__label { margin-top: 0; }
+}
+@media (max-width: 560px) {
+  .postcard { padding: 22px 20px 24px; border-radius: 24px; }
+  .postcard__title { font-size: 38px; }
+  .postcard__tips li { font-size: 15px; }
+  .postcard__name { font-size: 20px; }
+  .postcard__email { font-size: 23px; }
+  .postcard__actions { padding-top: 22px; }
+  .postcard__actions .btn { width: 100%; }
+}
 @media (max-width: 480px) {
-  .postcard__stamps { min-height: 118px; }
   .postmark { width: 100px; height: 100px; margin-right: -36px; }
   .postmark span { font-size: 8px; }
   .postmark strong { font-size: 16px; }
@@ -333,8 +353,6 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .btn--dark-yellow { background: var(--dark); color: var(--yellow); }
 .btn--dark-yellow:hover { background: var(--blue); color: var(--white); }
 .postcard [data-copy].is-copied { background: var(--dark); color: var(--white); border-color: var(--dark); }
-.contact__note { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 34px; font-weight: 700; font-size: 15px; color: rgba(255, 255, 255, 0.85); text-align: center; }
-.contact__note svg { color: var(--yellow); flex-shrink: 0; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--dark); padding: clamp(40px, 5vw, 60px) 0; }
@@ -391,8 +409,8 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
   .package__meta { padding-top: 16px; font-size: 14px; }
   .package__foot { margin-top: 18px; }
   .package__foot .btn { width: 100%; }
-  .packages-note { padding: 20px 22px; }
-}
+  .packages.swipe > * { flex-basis: 88%; }
+  }
 
 /* ---------- Mobilon swipe-olható kártyasorok ---------- */
 .swipe-dots { display: none; }

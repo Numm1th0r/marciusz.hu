@@ -137,6 +137,10 @@ function contactAndFooter() {
 <section class="contact" id="kapcsolat" aria-labelledby="kapcsolat-cim">
   <div class="container">
     <article class="postcard">
+      <div class="postcard__stamps" aria-hidden="true">
+        <div class="postmark"><span>${esc(host(SITE_URL).toUpperCase())}</span><strong>${year}</strong></div>
+        <div class="stamp"><span class="stamp__logo">IM</span><span class="stamp__text">WEB · ${year}</span></div>
+      </div>
       <div class="postcard__message">
         <h2 class="display postcard__title" id="kapcsolat-cim">${lines(site.contactHeading)}</h2>
         <p class="postcard__text">${esc(site.contactText)}</p>
@@ -145,10 +149,6 @@ function contactAndFooter() {
       </div>
       <div class="postcard__divider" aria-hidden="true"></div>
       <div class="postcard__address">
-        <div class="postcard__stamps" aria-hidden="true">
-          <div class="postmark"><span>${esc(host(SITE_URL).toUpperCase())}</span><strong>${year}</strong></div>
-          <div class="stamp"><span class="stamp__logo">IM</span><span class="stamp__text">WEB · ${year}</span></div>
-        </div>
         <p class="postcard__label">Címzett</p>
         <p class="postcard__line postcard__name">${esc(site.recipientName)}</p>
         <a class="postcard__line postcard__email" href="${mailto(site.email)}">${esc(site.email)}</a>
@@ -158,7 +158,6 @@ function contactAndFooter() {
         </div>
       </div>
     </article>
-    ${site.contactNote ? `<p class="contact__note">${CHECK}<span>${esc(site.contactNote)}</span></p>` : ''}
   </div>
 </section>
 ${wave('#32292f', 'wave--flush', '#19647e')}
@@ -272,13 +271,9 @@ function renderHome() {
         <h2 class="display h2" id="csomag-cim">${lines(packages.heading)}</h2>
         <p class="lead">${esc(packages.lead)}</p>
       </div>
-      <div class="packages">
+      <div class="packages swipe">
         ${packageCards}
       </div>
-      ${packages.note ? `<div class="packages-note">
-        <p>${esc(packages.note)}</p>
-        <a href="${mailto(site.email, 'Segíts választani')}">${esc(packages.noteLink)}</a>
-      </div>` : ''}
     </div>
     ${wave('#32292f')}
   </section>

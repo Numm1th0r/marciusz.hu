@@ -99,8 +99,6 @@ collections:
                   - { name: durationLabel, label: Átfutás felirat, widget: string, default: "Átfutás:" }
                   - { name: duration, label: Átfutás, widget: string, required: false }
                   - { name: buttonLabel, label: Gomb felirata, widget: string, default: Ezt kérem, hint: "A gomb e-mailt nyit a csomag nevével a tárgyban." }
-              - { name: note, label: Megjegyzés a csomagok alatt, widget: text, required: false }
-              - { name: noteLink, label: Megjegyzés link felirata, widget: string, required: false }
           - name: reference
             label: Referencia blokk
             widget: object
@@ -186,7 +184,6 @@ collections:
             widget: list
             required: false
             field: { name: tip, label: Tipp, widget: string }
-          - { name: contactNote, label: Kapcsolat – apró megjegyzés, widget: string, required: false }
           - { name: footerText, label: Lábléc szövege, widget: string }
           - { name: credits, label: Képforrás megjelölése, widget: string, required: false, hint: "Ha idegen képet használsz, ide írhatod a forrását." }
 
