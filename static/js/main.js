@@ -89,7 +89,7 @@
   });
 
   // ---- Referencia-videók: csak láthatóan töltődnek be és játszódnak ----
-  var videos = document.querySelectorAll('.browser__screen video');
+  var videos = document.querySelectorAll('.laptop__screen video');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (videos.length && 'IntersectionObserver' in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {

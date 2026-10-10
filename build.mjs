@@ -25,8 +25,8 @@ const esc = (s = '') =>
   String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const lines = (s = '') => esc(s).replace(/\n/g, '<br>');
 const list = (arr) => (Array.isArray(arr) ? arr : []);
-const mailto = (email, subject) => `mailto:${email}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`;
 const host = (url = '') => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+const mailto = (email, subject) => `mailto:${email}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`;
 
 // Nagyon egyszerű markdown: ## címek, bekezdések, - listák, **félkövér**, [link](url)
 function markdown(src = '') {
@@ -132,31 +132,33 @@ function nav(active) {
 
 function contactAndFooter() {
   const tips = list(site.contactTips);
+  const year = new Date().getFullYear();
   return `
 <section class="contact" id="kapcsolat" aria-labelledby="kapcsolat-cim">
-  <div class="container contact__grid">
-    <div class="contact__main">
-      <h2 class="display h2" id="kapcsolat-cim">${lines(site.contactHeading)}</h2>
-      <p class="contact__sub">${esc(site.contactText)}</p>
-      <div class="mail-card">
-        <a class="mail-card__link" href="${mailto(site.email)}">
-          <span class="mail-card__icon">${MAIL}</span>
-          <span class="mail-card__address">${esc(site.email)}</span>
-        </a>
-        <div class="mail-card__actions">
-          <a class="btn btn--yellow btn--sm" href="${mailto(site.email, 'Ajánlatkérés')}">E-mailt írok</a>
-          <button class="btn btn--ghost-light btn--sm" type="button" data-copy="${esc(site.email)}">Cím másolása</button>
+  <div class="container">
+    <article class="postcard">
+      <div class="postcard__message">
+        <h2 class="display postcard__title" id="kapcsolat-cim">${lines(site.contactHeading)}</h2>
+        <p class="postcard__text">${esc(site.contactText)}</p>
+        ${tips.length ? `<p class="postcard__label">${esc(site.contactTipsHeading)}</p>
+        <ul class="postcard__tips">${tips.map((t) => `<li>${CHECK}<span>${esc(t)}</span></li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="postcard__divider" aria-hidden="true"></div>
+      <div class="postcard__address">
+        <div class="postcard__stamps" aria-hidden="true">
+          <div class="postmark"><span>${esc(host(SITE_URL).toUpperCase())}</span><strong>${year}</strong></div>
+          <div class="stamp"><span class="stamp__logo">IM</span><span class="stamp__text">WEB · ${year}</span></div>
+        </div>
+        <p class="postcard__label">Címzett</p>
+        <p class="postcard__line postcard__name">${esc(site.recipientName)}</p>
+        <a class="postcard__line postcard__email" href="${mailto(site.email)}">${esc(site.email)}</a>
+        <div class="postcard__actions">
+          <a class="btn btn--dark-yellow btn--sm" href="${mailto(site.email, 'Ajánlatkérés')}">E-mailt írok</a>
+          <button class="btn btn--ghost btn--sm" type="button" data-copy="${esc(site.email)}">Cím másolása</button>
         </div>
       </div>
-      ${site.contactNote ? `<p class="contact__note">${CHECK}<span>${esc(site.contactNote)}</span></p>` : ''}
-    </div>
-    <div class="contact__side">
-      ${site.contactImage ? `<img class="contact__img" src="${esc(site.contactImage)}" alt="" loading="lazy" decoding="async">` : ''}
-      ${tips.length ? `<div class="tips">
-        <h3 class="tips__title">${esc(site.contactTipsHeading)}</h3>
-        <ul>${tips.map((t) => `<li>${CHECK}<span>${esc(t)}</span></li>`).join('')}</ul>
-      </div>` : ''}
-    </div>
+    </article>
+    ${site.contactNote ? `<p class="contact__note">${CHECK}<span>${esc(site.contactNote)}</span></p>` : ''}
   </div>
 </section>
 ${wave('#32292f', 'wave--flush', '#19647e')}
@@ -326,14 +328,14 @@ function renderReferences() {
           ${r.url ? `<a class="btn btn--dark btn--sm" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(refPage.projectButtonLabel || 'Megnézem az oldalt')}</a>` : ''}
         </div>
         <div class="project__media">
-          <div class="browser">
-            <div class="browser__bar" aria-hidden="true"><span class="browser__dots"><i></i><i></i><i></i></span><span class="browser__url">${esc(host(r.url))}</span></div>
-            <div class="browser__screen">
+          <div class="laptop">
+            <div class="laptop__screen">
               ${r.video
                 ? `<video muted loop playsinline preload="none"${r.poster ? ` poster="${esc(r.poster)}"` : ''} aria-label="${esc(r.title)} weboldal bemutató videója"><source src="${esc(r.video)}" type="video/mp4"></video>`
                 : r.poster ? `<img src="${esc(r.poster)}" alt="${esc(r.title)} weboldal" loading="lazy" decoding="async">` : ''}
             </div>
           </div>
+          <div class="laptop__base" aria-hidden="true"><span></span></div>
         </div>
       </article>`).join('');
 

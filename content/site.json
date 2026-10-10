@@ -1,6 +1,7 @@
 {
   "siteName": "István Marci – Weboldal-készítés",
   "email": "info@marciusz.work",
+  "recipientName": "István Marci",
   "contactHeading": "Írj nekem!",
   "contactText": "Mesélj pár mondatban az elképzelésedről, és 1–2 munkanapon belül válaszolok egy személyre szabott ajánlattal.",
   "contactTipsHeading": "Mit érdemes megírnod?",
@@ -11,7 +12,6 @@
     "Mikorra szeretnéd, hogy elkészüljön"
   ],
   "contactNote": "Az ajánlatkérés ingyenes, és semmire nem kötelez.",
-  "contactImage": "/media/postalada.webp",
   "footerText": "© 2026 István Marci · Weboldal-készítés",
-  "credits": "Postaláda illusztráció: pikisuperstar / Freepik"
+  "credits": ""
 }

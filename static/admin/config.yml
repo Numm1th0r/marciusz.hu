@@ -177,6 +177,7 @@ collections:
         fields:
           - { name: siteName, label: Az oldal neve, widget: string }
           - { name: email, label: E-mail cím, widget: string }
+          - { name: recipientName, label: Név a képeslapon (címzett), widget: string }
           - { name: contactHeading, label: Kapcsolat – cím, widget: string }
           - { name: contactText, label: Kapcsolat – szöveg, widget: text }
           - { name: contactTipsHeading, label: Tippek – cím, widget: string, required: false }
@@ -186,9 +187,8 @@ collections:
             required: false
             field: { name: tip, label: Tipp, widget: string }
           - { name: contactNote, label: Kapcsolat – apró megjegyzés, widget: string, required: false }
-          - { name: contactImage, label: Kapcsolat – illusztráció, widget: image, required: false }
           - { name: footerText, label: Lábléc szövege, widget: string }
-          - { name: credits, label: Képforrás megjelölése, widget: string, required: false, hint: "Ingyenes Freepik képnél kötelező feltüntetni a szerzőt." }
+          - { name: credits, label: Képforrás megjelölése, widget: string, required: false, hint: "Ha idegen képet használsz, ide írhatod a forrását." }
 
   # ── Referenciák ─────────────────────────────────────────────
   - name: referenciak
