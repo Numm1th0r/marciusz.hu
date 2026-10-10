@@ -1,18 +1,18 @@
 {
-  "title": "István Marci – Weboldal-készítés",
-  "description": "Egyedi tervezésű, mobilbarát weboldalak kisvállalkozásoknak, a tervezéstől az élesítésig. Landoló oldal vagy komplex weboldal, személyre szabott ajánlattal.",
+  "title": "Weboldal-készítés kisvállalkozásoknak – István Marci",
+  "description": "Egyedi tervezésű, mobilbarát weboldalak kisvállalkozásoknak: tájékoztató landoló oldal akár egy hét alatt, vagy komplex, könnyen szerkeszthető weboldal.",
   "hero": {
     "eyebrow": "",
     "heading": "Szia!",
-    "lead": "István Marci vagyok, weboldalakat tervezek és fejlesztek. Olyan oldalt készítek neked, ami jól néz ki, mobilon is gyors, és első ránézésre elmondja, mivel foglalkozol. A tervtől az élesítésig mindent egy kézben tartok.",
+    "lead": "István Marci vagyok, és imádok weboldalakkal foglalkozni. Olyan oldalt tervezek és fejlesztek neked, ami jól néz ki, mobilon is gyors, és első ránézésre elmondja, mivel foglalkozol. A tervtől az élesítésig mindent egy kézben tartok.",
     "primaryLabel": "Ajánlatot kérek",
     "secondaryLabel": "Munkáim",
     "image": "/media/marci-karakter.webp",
-    "imageAlt": "István Marci rajzolt karaktere, keresztbe tett karral"
+    "imageAlt": "István Marci illusztrált karaktere, keresztbe tett karral"
   },
   "services": {
     "heading": "Miben segítek?",
-    "lead": "Akár most indulsz, akár a régi oldaladat szégyelled megmutatni: segítek, hogy a weboldalad ügyfeleket hozzon, ne csak létezzen.",
+    "lead": "Akár most indulsz, akár a meglévő oldaladat frissítenéd: segítek, hogy a weboldalad ügyfeleket hozzon, ne csak létezzen.",
     "items": [
       {
         "icon": "landing",
@@ -37,10 +37,10 @@
       },
       {
         "icon": "pen",
-        "title": "Grafika",
-        "text": "A weboldalak mellett rajzolok is: pólómintát tervezek nyomdakész formában, és fotó alapján karikatúrát készítek.",
+        "title": "Digitális illusztráció",
+        "text": "A weboldalak mellett digitális illusztrációkat is készítek: nyomdakész pólómintákat és fotó alapján karikatúrákat.",
         "link": "/referenciak#polok-karikaturak",
-        "linkLabel": "Grafikák megtekintése →"
+        "linkLabel": "Illusztrációk megtekintése →"
       }
     ]
   },
@@ -85,7 +85,7 @@
   },
   "reference": {
     "heading": "Referencia",
-    "text": "Nézd meg, milyen oldalakat készítettem egy játékwebshopnak, egy herbalistának, egy marketing asszisztensnek és egy asztalosnak. Mellettük pedig pár pólóterv és karikatúra, mert a rajzolásról sem mondtam le.",
+    "text": "Nézd meg, milyen oldalakat készítettem egy herbalistának, egy marketing asszisztensnek és egy asztalosnak, és hogyan újítottam meg egy játékwebshop megjelenését. Mellettük pedig néhány digitális illusztráció és pólóterv is.",
     "primaryLabel": "Megnézem a munkáidat",
     "secondaryLabel": "Ajánlatot kérek",
     "tiles": [

@@ -1,12 +1,12 @@
 {
-  "title": "Referenciák – István Marci weboldal-készítés",
-  "description": "Weboldalak, amiket terveztem és fejlesztettem: Kockaország.hu, Tűzhely, Esztersmethod.hu, Beszerelem.hu. Mellettük pólótervek és karikatúrák.",
+  "title": "Referenciák: weboldalak és webshop-redesign – István Marci",
+  "description": "Weboldalak, amiket terveztem és fejlesztettem (Tűzhely, Esztersmethod.hu, Beszerelem.hu), a Kockaország.hu webshop redesignja és digitális illusztrációk.",
   "heading": "Weboldalaim",
   "lead": "Minden oldalt az adott vállalkozás hangulatára tervezek: először kitaláljuk a színeket és a stílust, aztán megtervezem a felépítést és a végleges dizájnt. Nézz bele, vagy kattints át az élő oldalakra!",
   "projectButtonLabel": "Megnézem az oldalt",
   "gallery": {
     "heading": "Pólók és karikatúrák",
-    "text": "A weboldalak mellett továbbra is rajzolok. Megtervezem a pólómintádat, és nyomdakész formában adom át, vagy fotó alapján megrajzolom a karikatúrádat. Remek ajándék, csapat- vagy tábori póló lehet belőle. Elég egy ötlet, egy vázlat vagy egy régi fotó.",
+    "text": "A weboldalak mellett digitális illusztrációkat is készítek. Megtervezem a pólómintádat, és nyomdakész formában adom át, vagy fotó alapján elkészítem a karikatúrádat. Remek ajándék, csapat- vagy tábori póló lehet belőle. Elég egy ötlet, egy vázlat vagy egy régi fotó.",
     "buttonLabel": "Kérek egyet",
     "images": [
       {
@@ -19,7 +19,7 @@
       },
       {
         "image": "/media/galeria/03-karikatura-par.webp",
-        "alt": "Rajzolt karikatúra egy párról"
+        "alt": "Digitális karikatúra egy párról"
       },
       {
         "image": "/media/galeria/04-polo-kucsera-ferfi.webp",
@@ -27,11 +27,11 @@
       },
       {
         "image": "/media/galeria/05-polo-vonalrajz.webp",
-        "alt": "Fekete póló fehér vonalrajzos portréval"
+        "alt": "Fekete póló fehér, vonalas portré-illusztrációval"
       },
       {
         "image": "/media/galeria/06-karikatura-busz.webp",
-        "alt": "Csoportkarikatúra: baráti társaság egy autóban"
+        "alt": "Digitális csoportkarikatúra: baráti társaság egy autóban"
       },
       {
         "image": "/media/galeria/07-pulcsi-roka-hat.webp",
@@ -39,7 +39,7 @@
       },
       {
         "image": "/media/galeria/08-vonalrajz-anna.webp",
-        "alt": "Vonalrajz egy klarinétozó lányról és kutyájáról"
+        "alt": "Vonalas illusztráció egy klarinétozó lányról és kutyájáról"
       },
       {
         "image": "/media/galeria/09-polo-kucsera-noi.webp",
@@ -51,7 +51,7 @@
       },
       {
         "image": "/media/galeria/11-polo-vonalrajz-farmer.webp",
-        "alt": "Krémszínű póló vonalrajzzal, farmerdzsekivel"
+        "alt": "Krémszínű póló vonalas illusztrációval, farmerdzsekivel"
       }
     ]
   }

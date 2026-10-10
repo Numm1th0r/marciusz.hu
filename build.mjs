@@ -74,7 +74,7 @@ const ICONS = {
 const icon = (name) =>
   `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffba08" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ICONS.landing}</svg>`;
 
-function head({ title, description, urlPath, noindex = false }) {
+function head({ title, description, urlPath, noindex = false, jsonLd = null }) {
   const url = SITE_URL + urlPath;
   return `<!DOCTYPE html>
 <html lang="hu">
@@ -96,7 +96,11 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-co
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${SITE_URL}/media/og-kep.jpg">
-<link rel="preload" href="/assets/fonts/bowlby-one-sc-latin.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="${esc(site.recipientName)}">
+${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>\n` : ''}<link rel="preload" href="/assets/fonts/bowlby-one-sc-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -236,7 +240,7 @@ function renderHome() {
     <div class="container hero__grid">
       <div>
         ${hero.eyebrow ? `<p class="eyebrow">${esc(hero.eyebrow)}</p>` : ''}
-        <h1 class="display h1">${lines(hero.heading)}</h1>
+        <h1 class="display h1">${lines(hero.heading)}<span class="visually-hidden"> – ${esc(site.siteName)}</span></h1>
         <p class="lead">${esc(hero.lead)}</p>
         <div class="btn-row">
           <a class="btn btn--blue" href="#kapcsolat">${esc(hero.primaryLabel)}</a>
@@ -305,7 +309,24 @@ ${testimonials.length ? `
     ${wave('#19647e', 'wave--to-contact')}
   </section>` : ''}`;
 
-  return page({ title: home.title, description: home.description, urlPath: '/' }, 'home', main);
+  // Strukturált adat a keresőknek: ki vagy, és milyen szolgáltatásokat kínálsz
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: site.siteName, inLanguage: 'hu' },
+      {
+        '@type': 'Person', '@id': `${SITE_URL}/#person`, name: site.recipientName, url: `${SITE_URL}/`,
+        email: `mailto:${site.email}`, image: `${SITE_URL}/media/og-kep.jpg`, jobTitle: 'Weboldal-készítő',
+        knowsAbout: ['Weboldal-készítés', 'Webdesign', 'WordPress', 'Landoló oldal', 'Digitális illusztráció'],
+      },
+      ...list(packages.items).map((p) => ({
+        '@type': 'Service', name: p.title, description: p.description, serviceType: 'Weboldal-készítés',
+        provider: { '@id': `${SITE_URL}/#person` }, areaServed: { '@type': 'Country', name: 'Magyarország' },
+      })),
+    ],
+  };
+
+  return page({ title: home.title, description: home.description, urlPath: '/', jsonLd }, 'home', main);
 }
 
 // ---------------------------------------------------------------- referenciák
@@ -439,7 +460,7 @@ for (const [file, html] of Object.entries(pages)) fs.writeFileSync(path.join(OUT
 
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${['/', '/referenciak', '/adatkezeles'].map((p) => `  <url><loc>${SITE_URL}${p}</loc></url>`).join('\n')}
+${['/', '/referenciak', '/adatkezeles'].map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod></url>`).join('\n')}
 </urlset>
 `);
 
