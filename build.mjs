@@ -159,8 +159,8 @@ function contactAndFooter() {
       </div>
     </article>
   </div>
+  ${wave('#32292f')}
 </section>
-${wave('#32292f', 'wave--flush', '#19647e')}
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
@@ -262,7 +262,7 @@ function renderHome() {
         ${serviceCards}
       </div>
     </div>
-    ${wave('#ececec')}
+    ${wave('#ececec', 'wave--to-packages')}
   </section>
 
   <section class="section section--light" id="csomagok" aria-labelledby="csomag-cim">
@@ -292,7 +292,7 @@ function renderHome() {
         </div>
       </div>
     </div>
-    ${wave(testimonials.length ? '#ececec' : '#19647e')}
+    ${testimonials.length ? wave('#ececec') : wave('#19647e', 'wave--to-contact')}
   </section>
 ${testimonials.length ? `
   <section class="section section--light" id="visszajelzesek" aria-labelledby="vissza-cim">
@@ -302,7 +302,7 @@ ${testimonials.length ? `
         ${quotes}
       </div>
     </div>
-    ${wave('#19647e')}
+    ${wave('#19647e', 'wave--to-contact')}
   </section>` : ''}`;
 
   return page({ title: home.title, description: home.description, urlPath: '/' }, 'home', main);
@@ -338,7 +338,7 @@ function renderReferences() {
     `            <div class="carousel__slide"><img src="${esc(im.image)}" alt="${esc(im.alt)}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async"></div>`).join('\n');
 
   const main = `
-  <section class="page-top section--light">
+  <section class="page-top page-top--refs section--light">
     <div class="container container--narrow">
       <a class="back" href="/">${BACK}Vissza</a>
       <h1 class="display h2 page-title">${lines(refPage.heading)}</h1>
@@ -363,7 +363,7 @@ ${slides}
         </div>
       </div>` : ''}
     </div>
-    ${wave('#19647e')}
+    ${wave('#19647e', 'wave--to-contact')}
   </section>`;
 
   return page({ title: refPage.title, description: refPage.description, urlPath: '/referenciak' }, 'ref', main);
@@ -382,7 +382,7 @@ function renderPrivacy() {
         ${markdown(privacy.body)}
       </div>
     </div>
-    ${wave('#19647e')}
+    ${wave('#19647e', 'wave--to-contact')}
   </section>`;
   return page({ title: `${privacy.title} – István Marci`, description: 'Adatkezelési és süti-tájékoztató a marciusz.work weboldalhoz.', urlPath: '/adatkezeles' }, '', main);
 }
@@ -401,7 +401,7 @@ function render404() {
         </div>
       </div>
     </div>
-    ${wave('#19647e')}
+    ${wave('#19647e', 'wave--to-contact')}
   </section>`;
   return page({ title: 'Az oldal nem található – István Marci', description: 'A keresett oldal nem található.', urlPath: '/404', noindex: true }, '', main);
 }

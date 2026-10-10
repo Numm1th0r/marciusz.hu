@@ -283,7 +283,7 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .carousel__count { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(50, 41, 47, 0.8); color: var(--white); font-weight: 800; font-size: 12px; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 999px; }
 
 /* ---------- Kapcsolat (footer) ---------- */
-.contact { background: var(--blue); padding: clamp(56px, 8vw, 96px) 0 clamp(56px, 8vw, 96px); scroll-margin-top: var(--nav-h); }
+.contact { background: var(--blue); padding: clamp(56px, 8vw, 96px) 0 0; scroll-margin-top: var(--nav-h); }
 
 /* Képeslap */
 .postcard {
@@ -425,7 +425,7 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
   .project { padding-top: 28px; padding-bottom: 32px; }
   .gallery { padding-top: 32px; padding-bottom: 36px; }
   .postcard { box-shadow: none; padding-top: 28px; padding-bottom: 32px; }
-  .contact { padding: 28px 0; }
+  .contact { padding: 28px 0 0; }
   .contact .container { padding: 0 var(--gutter); }
 
   /* Csomagok: teljes szélességű, oldalra húzható panelek */
@@ -438,7 +438,6 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
     position: absolute; top: 0; left: 0; right: 0; margin: 0;
     transform-origin: 50% 90%; transition: transform .35s ease, opacity .35s ease;
     touch-action: pan-y; user-select: none; -webkit-user-select: none;
-    box-shadow: 0 18px 40px -26px rgba(50, 41, 47, 0.45);
   }
   .projects.is-deck > .project img, .projects.is-deck > .project video { pointer-events: none; }
   .laptop__base { width: 104%; margin-left: -2%; }
@@ -449,6 +448,22 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
   .deck-dots span { width: 9px; height: 9px; border-radius: 999px; background: rgba(50, 41, 47, 0.25); transition: width .25s, background .25s; }
   .deck-dots span.is-active { width: 26px; background: var(--dark); }
   .deck-hint { margin-top: 12px; text-align: center; font-weight: 700; font-size: 13px; color: rgba(50, 41, 47, 0.55); }
+}
+
+/* ---------- Mobil: egységes elválasztások ---------- */
+@media (max-width: 759px) {
+  /* A hullámot nem nyomjuk össze (különben elliptikus ív lesz belőle), hanem a középső szeletét mutatjuk */
+  .wave { width: 180%; max-width: none; margin-left: -40%; }
+  main > section, .contact { overflow-x: clip; }
+
+  /* A kártyák háttere = a szekció háttere, így nincs egyenes vágás és kék keret */
+  .contact, #csomagok, .page-top--refs { background: var(--white); }
+  .wave--to-contact path, .wave--to-packages path { fill: var(--white); }
+  .packages.swipe + .swipe-dots { margin-top: 18px; }
+  .projects.is-deck > .project { box-shadow: none; }
+  .projects.is-deck > .project.is-dragging { box-shadow: 0 24px 50px -24px rgba(50, 41, 47, 0.5); }
+  .page-top--refs > .wave--to-contact { display: none; }
+  .page-top--refs { padding-bottom: 8px; }
 }
 
 /* ---------- Mobilon swipe-olható kártyasorok ---------- */

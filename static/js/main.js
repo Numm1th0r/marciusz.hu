@@ -150,11 +150,13 @@
       if (busy) return;
       busy = true;
       var c = top();
+      c.classList.add('is-dragging');
       c.style.transition = 'transform .35s ease-in, opacity .35s ease-in';
       c.style.transform = 'translateX(' + (dir * 130) + '%) rotate(' + (dir * 18) + 'deg)';
       c.style.opacity = '0';
       setTimeout(function () {
         order.push(order.shift());
+        c.classList.remove('is-dragging');
         c.style.transition = 'none';
         layout();
         void c.offsetWidth;
@@ -198,6 +200,7 @@
           mode = 'drag';
           try { top().setPointerCapture(pid); } catch (err) {}
           top().style.transition = 'none';
+          top().classList.add('is-dragging');
         } else if (Math.abs(my) > 8) { mode = 'scroll'; return; } else return;
       }
       dx = mx;
@@ -211,6 +214,7 @@
       mode = null;
       var c = top();
       c.style.transition = '';
+      c.classList.remove('is-dragging');
       if (Math.abs(dx) > c.offsetWidth * 0.25) next(dx > 0 ? 1 : -1);
       else c.style.transform = '';
       setTimeout(function () { dragged = false; }, 0);
