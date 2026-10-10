@@ -88,22 +88,165 @@
     update();
   });
 
-  // ---- Referencia-videók: csak láthatóan töltődnek be és játszódnak ----
+  // ---- Referencia-videók: csak láthatóan (és a pakli tetején) játszódnak ----
   var videos = document.querySelectorAll('.laptop__screen video');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (videos.length && 'IntersectionObserver' in window && !reduceMotion) {
+  function syncVideo(v) {
+    var card = v.closest('.project');
+    var hidden = card && card.getAttribute('data-deck-hidden') === '1';
+    if (v.getAttribute('data-inview') === '1' && !hidden && !reduceMotion) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    } else {
+      v.pause();
+    }
+  }
+  if (videos.length && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        var v = en.target;
-        if (en.isIntersecting) {
-          var p = v.play();
-          if (p && p.catch) p.catch(function () {});
-        } else {
-          v.pause();
-        }
+        en.target.setAttribute('data-inview', en.isIntersecting ? '1' : '0');
+        syncVideo(en.target);
       });
     }, { threshold: 0.35 });
     videos.forEach(function (v) { io.observe(v); });
+  }
+
+  // ---- Referenciák mobilon: Tinder-szerű, húzható pakli ----
+  var deck = document.querySelector('.projects');
+  if (deck && deck.children.length > 1) {
+    var mq = window.matchMedia('(max-width: 759px)');
+    var cards = Array.prototype.slice.call(deck.querySelectorAll(':scope > .project'));
+    var order = cards.slice();
+    var controls = document.createElement('div');
+    controls.className = 'deck-controls';
+    controls.innerHTML =
+      '<button type="button" class="deck-btn" data-dir="prev" aria-label="Előző referencia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+      '<div class="deck-dots"></div>' +
+      '<button type="button" class="deck-btn" data-dir="next" aria-label="Következő referencia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>';
+    var dotsWrap = controls.querySelector('.deck-dots');
+    cards.forEach(function () { dotsWrap.appendChild(document.createElement('span')); });
+    var hint = document.createElement('p');
+    hint.className = 'deck-hint';
+    hint.textContent = 'Húzd oldalra a következő referenciához';
+    var busy = false, dragged = false, ro = null;
+
+    function top() { return order[0]; }
+    function fitHeight() { deck.style.height = (top().offsetHeight + 16) + 'px'; }
+    function layout() {
+      order.forEach(function (c, i) {
+        c.style.zIndex = String(order.length - i);
+        c.setAttribute('data-deck-hidden', i === 0 ? '0' : '1');
+        c.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+        if (i === 0) { c.style.transform = ''; c.style.opacity = '1'; c.style.visibility = 'visible'; }
+        else if (i === 1) { c.style.transform = 'translateY(14px) scale(0.95)'; c.style.opacity = '1'; c.style.visibility = 'visible'; }
+        else { c.style.transform = 'translateY(14px) scale(0.95)'; c.style.opacity = '0'; c.style.visibility = 'hidden'; }
+      });
+      Array.prototype.forEach.call(dotsWrap.children, function (d, j) { d.className = cards[j] === top() ? 'is-active' : ''; });
+      if (ro) { ro.disconnect(); ro.observe(top()); }
+      fitHeight();
+      videos.forEach(syncVideo);
+    }
+    function next(dir) {
+      if (busy) return;
+      busy = true;
+      var c = top();
+      c.style.transition = 'transform .35s ease-in, opacity .35s ease-in';
+      c.style.transform = 'translateX(' + (dir * 130) + '%) rotate(' + (dir * 18) + 'deg)';
+      c.style.opacity = '0';
+      setTimeout(function () {
+        order.push(order.shift());
+        c.style.transition = 'none';
+        layout();
+        void c.offsetWidth;
+        c.style.transition = '';
+        busy = false;
+      }, 340);
+    }
+    function prev() {
+      if (busy) return;
+      busy = true;
+      var c = order.pop();
+      order.unshift(c);
+      c.style.transition = 'none';
+      c.style.visibility = 'visible';
+      c.style.zIndex = String(order.length + 1);
+      c.style.transform = 'translateX(-130%) rotate(-18deg)';
+      c.style.opacity = '0';
+      void c.offsetWidth;
+      c.style.transition = '';
+      layout();
+      setTimeout(function () { busy = false; }, 360);
+    }
+    controls.addEventListener('click', function (e) {
+      var b = e.target.closest('.deck-btn');
+      if (!b) return;
+      if (b.getAttribute('data-dir') === 'next') next(-1); else prev();
+    });
+
+    // húzás
+    var sx = 0, sy = 0, dx = 0, mode = null, pid = null;
+    function onDown(e) {
+      if (!deck.classList.contains('is-deck') || busy || e.button > 0) return;
+      if (e.currentTarget !== top()) return;
+      sx = e.clientX; sy = e.clientY; dx = 0; mode = null; pid = e.pointerId; dragged = false;
+    }
+    function onMove(e) {
+      if (pid !== e.pointerId || mode === 'scroll') return;
+      var mx = e.clientX - sx, my = e.clientY - sy;
+      if (!mode) {
+        if (Math.abs(mx) > 8 && Math.abs(mx) > Math.abs(my)) {
+          mode = 'drag';
+          try { top().setPointerCapture(pid); } catch (err) {}
+          top().style.transition = 'none';
+        } else if (Math.abs(my) > 8) { mode = 'scroll'; return; } else return;
+      }
+      dx = mx;
+      dragged = true;
+      top().style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 16) + 'deg)';
+    }
+    function onUp(e) {
+      if (pid !== e.pointerId) return;
+      pid = null;
+      if (mode !== 'drag') { mode = null; return; }
+      mode = null;
+      var c = top();
+      c.style.transition = '';
+      if (Math.abs(dx) > c.offsetWidth * 0.25) next(dx > 0 ? 1 : -1);
+      else c.style.transform = '';
+      setTimeout(function () { dragged = false; }, 0);
+    }
+    cards.forEach(function (c) {
+      c.addEventListener('pointerdown', onDown);
+      c.addEventListener('pointermove', onMove);
+      c.addEventListener('pointerup', onUp);
+      c.addEventListener('pointercancel', onUp);
+      c.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+      c.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    });
+
+    function setup() {
+      if (mq.matches) {
+        deck.classList.add('is-deck');
+        if (!controls.parentNode) { deck.parentNode.insertBefore(controls, deck.nextSibling); deck.parentNode.insertBefore(hint, controls.nextSibling); }
+        if ('ResizeObserver' in window) ro = ro || new ResizeObserver(fitHeight);
+        layout();
+      } else {
+        deck.classList.remove('is-deck');
+        deck.style.height = '';
+        if (ro) ro.disconnect();
+        if (controls.parentNode) { controls.remove(); hint.remove(); }
+        cards.forEach(function (c) {
+          ['transform', 'opacity', 'visibility', 'zIndex', 'transition'].forEach(function (k) { c.style[k] = ''; });
+          c.removeAttribute('data-deck-hidden');
+          c.removeAttribute('aria-hidden');
+        });
+        order = cards.slice();
+        videos.forEach(syncVideo);
+      }
+    }
+    if (mq.addEventListener) mq.addEventListener('change', setup); else mq.addListener(setup);
+    window.addEventListener('resize', function () { if (deck.classList.contains('is-deck')) fitHeight(); });
+    setup();
   }
 
   // ---- E-mail cím másolása ----
