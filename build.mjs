@@ -272,7 +272,7 @@ function renderHome() {
         <h2 class="display h2" id="csomag-cim">${lines(packages.heading)}</h2>
         <p class="lead">${esc(packages.lead)}</p>
       </div>
-      <div class="packages swipe">
+      <div class="packages">
         ${packageCards}
       </div>
       ${packages.note ? `<div class="packages-note">

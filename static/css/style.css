@@ -161,6 +161,11 @@ a { color: var(--blue); text-decoration: none; }
 .hero-art { width: 100%; max-width: 440px; margin: 0 auto; }
 .hero-art__frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 999px 999px 32px 32px; background: var(--blue); }
 .hero-art__frame img { position: absolute; left: 50%; bottom: 0; height: 88%; width: auto; max-width: none; transform: translateX(-50%); }
+@media (max-width: 759px) {
+  .hero { padding-top: calc(var(--nav-h) + 24px); }
+  .hero__grid { gap: 28px; }
+  .hero-art { order: -1; max-width: 260px; }
+}
 
 /* ---------- Szolgáltatások ---------- */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(16px, 2vw, 28px); margin-top: clamp(36px, 5vw, 56px); }
@@ -374,6 +379,20 @@ a.glass-card:hover, .glass-card:hover { transform: translateY(-8px); background:
 .maintenance__card h1 { margin-top: 0; }
 .maintenance__card .lead + .lead { margin-top: 12px; }
 .maintenance__icon { width: 76px; height: 76px; border-radius: 22px; background: var(--yellow); display: flex; align-items: center; justify-content: center; margin: 0 auto 26px; }
+
+@media (max-width: 699px) {
+  .packages { gap: 16px; }
+  .package { padding: 26px 22px; border-radius: 26px; }
+  .package h3 { font-size: 28px; margin-top: 16px; }
+  .package__desc { margin-top: 10px; font-size: 15px; }
+  .package__list { gap: 10px; margin-top: 20px; margin-bottom: 22px; }
+  .package__list li { font-size: 15px; gap: 10px; }
+  .package__list svg { width: 18px; height: 18px; }
+  .package__meta { padding-top: 16px; font-size: 14px; }
+  .package__foot { margin-top: 18px; }
+  .package__foot .btn { width: 100%; }
+  .packages-note { padding: 20px 22px; }
+}
 
 /* ---------- Mobilon swipe-olható kártyasorok ---------- */
 .swipe-dots { display: none; }
